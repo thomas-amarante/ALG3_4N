@@ -2,13 +2,13 @@ public class Cor {
 
 	private int red;
 	private int green;
-	private int yellow;
+	private int blue;
 	private int grey;
 
-	public Cor(int red, int green, int yellow) {
+	public Cor(int red, int green, int blue) {
 		this.red = red;
 		this.green = green;
-		this.yellow = yellow;
+		this.blue = blue;
 	}
 
 	public Cor(int cinza) {
@@ -23,8 +23,8 @@ public class Cor {
 		return green;
 	}
 
-	public int getyellow() {
-		return yellow;
+	public int getblue() {
+		return blue;
 	}
 
 	public int getGrey() {
