@@ -1,0 +1,128 @@
+package dijkstra;
+import java.util.PriorityQueue;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
+/**
+ *
+ * @author Thomas
+ */
+class Vertex implements Comparable<Vertex>
+{
+    public final String name;
+    public Edge[] adjacencies;
+    public double minDistance = Double.POSITIVE_INFINITY;
+    public Vertex previous;
+    public Vertex(String argName) { name = argName; }
+    public String toString() { return name; }
+    public int compareTo(Vertex other)
+    {
+        return Double.compare(minDistance, other.minDistance);
+    }
+}
+
+class Edge
+{
+    public final Vertex target;
+    public final double weight;
+    public Edge(Vertex argTarget, double argWeight)
+    { target = argTarget; weight = argWeight; }
+}
+
+public class Dijkstra  {
+
+    /**
+     * @param args the command line arguments
+     */
+    
+//Método que calcula caminho e menor distância
+    public static void computePaths(Vertex source, Vertex proximo) {
+        source.minDistance = 0.;
+        PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
+      	vertexQueue.add(source);
+        
+        System.out.println("DE=" + vertexQueue + " PARA=" + proximo);
+
+        // enquanto a pilha for diferente de vazio continua retirando valores 
+	while (!vertexQueue.isEmpty()) {
+	    
+            // variavel que recebe o valor retirado da pilha
+            Vertex u = vertexQueue.poll();
+
+            // variavel e recebe cada uma das adjacencias, ou seja, um objeto "e" com target e peso 
+            for (Edge e : u.adjacencies)
+            {
+                // target é atribuido a uma variavel do tipo Vertex
+                Vertex v = e.target;
+                // peso atribuido a uma variavel do tipo double
+                double weight = e.weight;
+                
+                double distanceThroughU = u.minDistance + weight;
+                System.out.println("E TARGET=" + e.target);
+                
+                System.out.println("Velho U: " + v + " dist=" + u.minDistance + "  ant=" + u.previous);
+
+                //System.out.println("distancia até U=" + distanceThroughU);
+		if (distanceThroughU < v.minDistance) {
+		    vertexQueue.remove(v);
+		    v.minDistance = distanceThroughU ;
+		    v.previous = u;
+                    System.out.println("Novo V: dist=" + v.minDistance + " ant=" + v.previous);
+		    vertexQueue.add(v);
+                    
+		}
+                System.out.println("---- " + vertexQueue);
+                
+            }
+        }
+        
+       
+    }
+    // Método que imprime o menor caminho para se chegar ao vértice
+     public static List<Vertex> getShortestPathTo(Vertex target)
+    {
+        System.out.println("target=" + target);
+        List<Vertex> path = new ArrayList<Vertex>();
+        
+        // laço de repetição parte do valor de target e vai decrementando, ou seja, voltando
+        for (Vertex vertex = target; vertex != null; vertex = vertex.previous) {
+            path.add(vertex);
+            System.out.println(vertex + "===>" + path);
+        }
+        // aplica o reverse para ordem inversa dos valores da lista
+        Collections.reverse(path);
+        System.out.println("reverse=" + path);
+        return path;
+    }
+     
+     
+     public static void main(String[] args)
+    {
+        Vertex v0 = new Vertex("Vértice 0");
+	Vertex v1 = new Vertex("Vértice 1");
+	Vertex v2 = new Vertex("Vértice 2");
+	Vertex v3 = new Vertex("Vértice 3");
+	
+	v0.adjacencies = new Edge[]{ new Edge(v1, 2),
+	                             new Edge(v2, 3)};
+                               
+	v1.adjacencies = new Edge[]{ new Edge(v2, 2)};
+	                            
+	v2.adjacencies = new Edge[]{ new Edge(v3, 1),};
+	
+        v3.adjacencies = new Edge[]{ };
+	
+	Vertex[] vertices = { v0, v1, v2, v3 };
+        computePaths(v0, v2);
+        
+        
+        for (Vertex v : vertices)
+	{
+	    System.out.println("Distancia do " + v + ": " + v.minDistance);
+	    List<Vertex> path = getShortestPathTo(v);
+	    System.out.println("Caminho: " + path + "\n\n");
+	}
+    }
+    
+}
