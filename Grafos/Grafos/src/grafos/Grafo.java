@@ -22,40 +22,40 @@ public class Grafo {
     public void montarGrafo() throws FileNotFoundException, IOException {
         String idVertice, vizinho;
 
-        idVertice = scan.next();
+        idVertice = scan.next(); // ler primeiro número do arquivo
 
         Vertice ver = new Vertice();
-        ver.setId(Integer.parseInt(idVertice));
-        vizinho = scan.next();
+        ver.setId(Integer.parseInt(idVertice));// atribui por parâmetro
+        vizinho = scan.next(); // ler segundo número do arquivo 
         this.vizinhoExiste = vizinhoExiste(Integer.parseInt(vizinho));
-        if (this.vizinhoExiste == -1) {
+        if (this.vizinhoExiste == -1) { // se vizinhoExiste não existir
             Vertice ver3 = new Vertice();
 
             ver3.setId(Integer.parseInt(vizinho));
 
             grafo.add(ver3);
         }
-        ver.setVerticeVizinhos(Integer.parseInt(vizinho));
-        ver.setPeso(Integer.parseInt(scan.next()));
+        ver.setVerticeVizinhos(Integer.parseInt(vizinho));//atribui vizinho a partir da var vizinho
+        ver.setPeso(Integer.parseInt(scan.next())); //ler 3º parâmetro e setando como peso 
 
         grafo.add(ver);
 
-        while (scan.hasNext()) {
-            idVertice = scan.next();
+        while (scan.hasNext()) { // enquanto houverem linhas para serem analisadas
+            idVertice = scan.next(); // ler e atribuir valor para essa variável
 
-            this.verticeExiste = verticeExiste(Integer.parseInt(idVertice));
-            if (this.verticeExiste != -1) {
-                vizinho = scan.next();
+            this.verticeExiste = verticeExiste(Integer.parseInt(idVertice)); // conversao para integer e passagem de parametro para o metodo
+            if (this.verticeExiste != -1) { // verifica se existe vizinho
+                vizinho = scan.next(); // se sim, lê segundo numero do arquivo
                 vizinhoExiste = vizinhoExiste(Integer.parseInt(vizinho));
-                if (vizinhoExiste == -1) {
+                if (vizinhoExiste == -1) { // se não, cai dentro do if
                     Vertice ver4 = new Vertice();
 
                     ver4.setId(Integer.parseInt(vizinho));
 
                     grafo.add(ver4);
                 }
-                grafo.get(this.verticeExiste).setVerticeVizinhos(Integer.parseInt(vizinho));
-                grafo.get(this.verticeExiste).setPeso(Integer.parseInt(scan.next()));
+                grafo.get(this.verticeExiste).setVerticeVizinhos(Integer.parseInt(vizinho)); // seta o vertice vizinho para o grafo
+                grafo.get(this.verticeExiste).setPeso(Integer.parseInt(scan.next())); // lê 3º numero da linha no arquivo e seta o peso do grafo
             } else {
                 Vertice ver1 = new Vertice();
                 ver1.setId(Integer.parseInt(idVertice));
@@ -97,7 +97,7 @@ public class Grafo {
         return this.vizinhoExiste;
     }
 
-    public void zeraEtiquetaVerticeInicial(int from) {
+    public void zeraEtiquetaVerticeInicial(int from) { // zera o peso inicial do nodo de origem
         for (int i = 0; i < grafo.size(); i++) {
             if (grafo.get(i).getId() == from) {
                 grafo.get(i).setEtiqueta(0);
