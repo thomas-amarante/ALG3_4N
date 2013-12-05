@@ -25,7 +25,7 @@ public class Grafo {
         idVertice = scan.next(); // ler primeiro número do arquivo
 
         Vertice ver = new Vertice();
-        ver.setId(Integer.parseInt(idVertice));// atribui por parâmetro
+        ver.setId(Integer.parseInt(idVertice));// converte IDVertice para integer e seta o ID na classe Vertice
         vizinho = scan.next(); // ler segundo número do arquivo 
         this.vizinhoExiste = vizinhoExiste(Integer.parseInt(vizinho));
         if (this.vizinhoExiste == -1) { // se vizinhoExiste não existir
