@@ -16,7 +16,7 @@ public class Grafo {
     int vizinhoExiste = -1;
 
     public Grafo() throws FileNotFoundException {
-        this.scan = new Scanner(new FileReader("Grafo.txt"));
+        this.scan = new Scanner(new FileReader("grafo.txt"));
     }
 
     public void montarGrafo() throws FileNotFoundException, IOException {
